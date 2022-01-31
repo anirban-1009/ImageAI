@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.imageai/
+resnet50_coco_best_v2.1.0.h5
+yolo.h5
+
 # C extensions
 *.cpp
 *.so

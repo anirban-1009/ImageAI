@@ -1,13 +1,14 @@
-from imageai.Classification import ImageClassification
+from imageai.Detection import ObjectDetection
 import os
 
 execution_path = os.getcwd()
 
-prediction = ImageClassification()
-prediction.setModelTypeAsResNet50()
-prediction.setModelPath(os.path.join(execution_path, "resnet50_imagenet_tf.2.0.h5"))
-prediction.loadModel()
+detector = ObjectDetection()
+detector.setModelTypeAsRetinaNet()
+detector.setModelPath( os.path.join(execution_path , "resnet50_coco_best_v2.1.0.h5"))
+detector.loadModel()
+detections = detector.detectObjectsFromImage(input_image=os.path.join(execution_path , "1.jpg"), output_image_path=os.path.join(execution_path , "image2new.jpg"), minimum_percentage_probability=30)
 
-predicitions, probabilities = prediction.classifyImage(os.path.join(execution_path, "1.jpg"), result_count=5)
-for eachPrediction, eachProbability in zip(predicitions, probabilities):
-    print(eachPrediction, " : ", eachProbability)
+for eachObject in detections:
+    print(eachObject["name"] , " : ", eachObject["percentage_probability"], " : ", eachObject["box_points"] )
+    print("--------------------------------")
